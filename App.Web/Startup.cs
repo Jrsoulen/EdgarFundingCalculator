@@ -6,6 +6,12 @@ namespace FundingCalculatorApi;
 
 public class Startup
 {
+    public IConfiguration Configuration { get; }
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
         // Entity Framework SQLLite Config
@@ -15,22 +21,22 @@ public class Startup
         services.AddDbContext<CompanyContext>(options =>
             options.UseSqlite($"Data Source={DbPath}"));
 
-        // HttpClient for Edgar with required default headers
-        var client = new HttpClient();
-        client.BaseAddress = new Uri("https://data.sec.gov/");
-        client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.34.0");
-        client.DefaultRequestHeaders.Add("Accept", "*/*");
-
         // SQLLite DbContext will be injected here
         services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         // Repo and HttpClient will be injected here
-        services.AddHttpClient<IEdgarFundingCalculatorService, EdgarFundingCalculatorService>();
+        services.AddHttpClient<IEdgarFundingCalculatorService, EdgarFundingCalculatorService>(client =>
+        {
+            client.BaseAddress = new Uri("https://data.sec.gov/");
+            client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.34.0");
+            client.DefaultRequestHeaders.Add("Accept", "*/*");
+        });
     }
 
     public async void Configure(IApplicationBuilder app)
     {
-        var ciks = new List<int>() { 1 };
+
+        var ciks = Configuration.GetSection("ProvidedCiks").Get<List<int>>();
 
         using (var scope = app.ApplicationServices.CreateScope())
         {
