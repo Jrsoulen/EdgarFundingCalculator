@@ -8,6 +8,15 @@ public class CompanyContext : DbContext
     public CompanyContext(DbContextOptions<CompanyContext> options) : base(options)
     {
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        var DbPath = Path.Join(path, "edgar.db");
+        optionsBuilder.UseSqlite($"Data Source={DbPath}");
+    }
+
 }
 
 public class Company
