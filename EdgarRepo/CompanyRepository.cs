@@ -7,15 +7,15 @@ public class CompanyRepository : ICompanyRepository
     {
         _dbContext = context;
     }
-    public EdgarCompanyInfo CreateEdgarCompanyInfo(EdgarCompanyInfo entity)
+    public Company CreateEdgarCompanyInfo(Company entity)
     {
         _dbContext.Add(entity);
         _dbContext.SaveChanges();
         return entity;
     }
-    public EdgarCompanyInfo GetEdgarCompanyInfo(int id)
+    public Company GetEdgarCompanyInfo(int id)
     {
-        var company = _dbContext.EdgarCompanies
+        var company = _dbContext.Companies
             .Where(b => b.Cik == id)
             .FirstOrDefault();
 
@@ -23,9 +23,9 @@ public class CompanyRepository : ICompanyRepository
 
         return company;
     }
-    public EdgarCompanyInfo UpdateEdgarCompanyInfo(EdgarCompanyInfo entity)
+    public Company UpdateEdgarCompanyInfo(Company entity)
     {
-        var company = _dbContext.EdgarCompanies
+        var company = _dbContext.Companies
             .Where(b => b.Cik == entity.Cik)
             .FirstOrDefault();
 
@@ -39,7 +39,7 @@ public class CompanyRepository : ICompanyRepository
     }
     public void DeleteCompany(int id)
     {
-        var company = _dbContext.EdgarCompanies
+        var company = _dbContext.Companies
             .Where(b => b.Cik == id)
             .FirstOrDefault();
 
@@ -52,8 +52,8 @@ public class CompanyRepository : ICompanyRepository
 
 public interface ICompanyRepository
 {
-    EdgarCompanyInfo CreateEdgarCompanyInfo(EdgarCompanyInfo entity);
-    EdgarCompanyInfo GetEdgarCompanyInfo(int id);
-    EdgarCompanyInfo UpdateEdgarCompanyInfo(EdgarCompanyInfo entity);
+    Company CreateEdgarCompanyInfo(Company entity);
+    Company GetEdgarCompanyInfo(int id);
+    Company UpdateEdgarCompanyInfo(Company entity);
     void DeleteCompany(int id);
 }

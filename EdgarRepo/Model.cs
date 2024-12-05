@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 public class EdgarContext : DbContext
 {
-    public DbSet<EdgarCompanyInfo> EdgarCompanies { get; set; }
+    public DbSet<Company> Companies { get; set; }
 
     public EdgarContext(DbContextOptions<EdgarContext> options) : base(options)
     {
     }
 }
 
-public class EdgarCompanyInfo
+public class Company
 {
     // Class built from spec reference:
     // You will be interested in “cik”, “entityName”, and (...) the “val”, “form”, and “frame” fields

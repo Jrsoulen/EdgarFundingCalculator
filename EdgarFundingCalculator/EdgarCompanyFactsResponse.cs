@@ -2,7 +2,7 @@
 
 public static class ResponseExtensions
 {
-    public static EdgarCompanyInfo MapToCore(this EdgarCompanyFactsResponse response)
+    public static Company MapToCore(this EdgarCompanyFactsResponse response)
     {
         var usdArray = response.Facts.UsGaap.NetIncomeLoss.Units.Usd;
         var fitleredUsd = usdArray.Where(u => u.Form == "10-K" && u.Frame.StartsWith("CY"));
@@ -11,7 +11,7 @@ public static class ResponseExtensions
 
         var usd = fitleredUsd.First();
 
-        return new EdgarCompanyInfo()
+        return new Company()
         {
             Cik = response.Cik,
             EntityName = response.EntityName,
