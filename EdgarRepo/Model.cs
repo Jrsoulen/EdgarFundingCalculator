@@ -12,9 +12,11 @@ public class EdgarContext : DbContext
 
 public class EdgarCompanyInfo
 {
+    // Class built from spec reference:
+    // You will be interested in “cik”, “entityName”, and (...) the “val”, “form”, and “frame” fields
     [Key]
     public int Cik { get; set; }
     public required string EntityName { get; set; }
     public required string Frame { get; set; }
-    public required string Value { get; set; }
+    public required decimal Value { get; set; }
 }
