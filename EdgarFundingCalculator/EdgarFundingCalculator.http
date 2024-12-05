@@ -1,6 +1,6 @@
 @EdgarFundingCalculator_HostAddress = http://localhost:5164
 
-GET {{EdgarFundingCalculator_HostAddress}}/weatherforecast/
+GET {{EdgarFundingCalculator_HostAddress}}/companies/
 Accept: application/json
 
 ###

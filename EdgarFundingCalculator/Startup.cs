@@ -25,14 +25,18 @@ public class Startup
         services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         // Repo and HttpClient will be injected here
-        services.AddScoped<IEdgarFundingCalculatorService, EdgarFundingCalculatorService>();
+        services.AddHttpClient<IEdgarFundingCalculatorService, EdgarFundingCalculatorService>();
     }
 
     public async void Configure(IApplicationBuilder app)
     {
         var ciks = new List<int>() { 1 };
-        await app.ApplicationServices.GetRequiredService<IEdgarFundingCalculatorService>()
-            .PopulateCompanyData(ciks);
+
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            await scope.ServiceProvider.GetRequiredService<IEdgarFundingCalculatorService>()
+                .PopulateCompanyData(ciks);
+        }
 
         // Configure the HTTP request pipeline.
         app.UseHttpsRedirection();
