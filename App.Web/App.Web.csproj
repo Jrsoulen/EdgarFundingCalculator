@@ -11,10 +11,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdgarRepo\App.Data.csproj" />
+    <ProjectReference Include="..\App.Data\App.Data.csproj" />
   </ItemGroup>
 
 </Project>
