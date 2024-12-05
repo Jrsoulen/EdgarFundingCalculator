@@ -1,11 +1,29 @@
+using App.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+var folder = Environment.SpecialFolder.LocalApplicationData;
+var path = Environment.GetFolderPath(folder);
+var DbPath = Path.Join(path, "edgar.db");
+builder.Services.AddDbContext<EdgarContext>(options =>
+    options.UseSqlite(DbPath));
+builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
+
+// Add services to the container.
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
+    var context = services.GetRequiredService<EdgarContext>();
+    context.Database.EnsureCreated();
+}
+
+
+// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
 var summaries = new[]
