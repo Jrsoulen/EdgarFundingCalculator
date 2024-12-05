@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
-using System.Reflection.Metadata;
-
 using var db = new EdgarContext();
 
 // Note: This sample requires the database to be created before running.
@@ -10,10 +5,13 @@ Console.WriteLine($"Database path: {db.DbPath}.");
 
 // Create
 Console.WriteLine("Inserting a new blog");
-db.Add(new EdgarCompanyInfo { Cik = 4,
+db.Add(new EdgarCompanyInfo
+{
+    Cik = 4,
     EntityName = "Testing",
     Frame = "",
-    Value = "Test Value"});
+    Value = "Test Value"
+});
 db.SaveChanges();
 
 // Read
