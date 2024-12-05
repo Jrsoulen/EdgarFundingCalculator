@@ -35,6 +35,7 @@ public class EdgarApiServiceTests
         client.BaseAddress = new Uri("https://data.sec.gov/");
         client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.34.0");
         client.DefaultRequestHeaders.Add("Accept", "*/*");
+        var mockRepo = new Mock<ICompanyRepository>();
 
         var sut = new EdgarFundingCalculatorService(client, mockRepo.Object);
 
