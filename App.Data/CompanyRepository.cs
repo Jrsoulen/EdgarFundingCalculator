@@ -13,15 +13,11 @@ public class CompanyRepository : ICompanyRepository
         _dbContext.SaveChanges();
         return entity;
     }
-    public Company GetEdgarCompanyInfo(int id)
+    public Company? GetEdgarCompanyInfo(int id)
     {
-        var company = _dbContext.Companies
+        return _dbContext.Companies
             .Where(b => b.Cik == id)
             .FirstOrDefault();
-
-        if (company is null) throw new ArgumentException($"Company with Cik {id} does not exist");
-
-        return company;
     }
     public Company UpdateEdgarCompanyInfo(Company entity)
     {
@@ -31,7 +27,7 @@ public class CompanyRepository : ICompanyRepository
 
         if (company is null) throw new ArgumentException($"Company with Cik {entity.Cik} does not exist");
 
-        company.EntityName = "new test company name";
+        company.EntityName = entity.EntityName;
 
         _dbContext.SaveChanges();
 
@@ -53,7 +49,7 @@ public class CompanyRepository : ICompanyRepository
 public interface ICompanyRepository
 {
     Company CreateEdgarCompanyInfo(Company entity);
-    Company GetEdgarCompanyInfo(int id);
+    Company? GetEdgarCompanyInfo(int id);
     Company UpdateEdgarCompanyInfo(Company entity);
     void DeleteCompany(int id);
 }
