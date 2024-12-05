@@ -2,10 +2,16 @@
 
 namespace App.Web
 {
+    public interface IEdgarFundingCalculatorService
+    {
+        Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
+        Task PopulateCompanyData(List<int> ciks);
+    }
+
     /// <summary>
     /// All Business Logic for application is here
     /// </summary>
-    public class EdgarFundingCalculatorService
+    public class EdgarFundingCalculatorService : IEdgarFundingCalculatorService
     {
         private readonly HttpClient _httpClient;
         private readonly ICompanyRepository _companyRepo;
