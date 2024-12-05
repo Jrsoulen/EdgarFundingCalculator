@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Entity Framework SQLLite Config
 var folder = Environment.SpecialFolder.LocalApplicationData;
 var path = Environment.GetFolderPath(folder);
 var DbPath = Path.Join(path, "edgar.db");
 builder.Services.AddDbContext<EdgarContext>(options =>
-    options.UseSqlite(DbPath));
+    options.UseSqlite($"Data Source={DbPath}"));
+
 builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
 
 // Add services to the container.
