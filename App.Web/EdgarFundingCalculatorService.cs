@@ -25,44 +25,44 @@ namespace App.Web
                 if (foraData != null) continue; // Already populated, do we care?
 
                 var edgarResponse = await GetCompanyFacts(cik);
+                if (edgarResponse == null) continue; // No Edgar Data
 
                 _companyRepo.CreateEdgarCompanyInfo(edgarResponse.MapToCore());
             }
         }
 
-        public async Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik)
+        public async Task<EdgarCompanyFactsResponse?> GetCompanyFacts(int cik)
         {
             // API wants leading zeros on 10 digit CIK
             var cikString = cik.ToString();
             while (cikString.Length < 10) cikString = "0" + cikString;
 
-            var companyFacts = await _httpClient.GetFromJsonAsync<EdgarCompanyFactsResponse>($"api/xbrl/companyfacts/CIK{cikString}.json");
-            if (companyFacts == null)
-                throw new ArgumentException($"CIK ${cik} does not exist.");
-
-            return companyFacts;
+            try
+            {
+                var companyFacts = await _httpClient.GetFromJsonAsync<EdgarCompanyFactsResponse>($"api/xbrl/companyfacts/CIK{cikString}.json");
+                return companyFacts;
+            }
+            catch
+            {
+                Console.WriteLine($"CIK ${cik} does not exist.");
+                return null;
+            }
         }
 
-        public async Task<CompanyResponse> GetAllCompanyInfo()
+        public List<Company> GetAllCompanyInfo()
         {
-            return new CompanyResponse
-            {
-                id = 0,
-                name = "test",
-                specialFundableAmount = 0,
-                standardFundableAmount = 0
-            };
+            return _companyRepo.GetAllEdgarCompanyInfo();
         }
     }
-
 }
 
 public interface IEdgarFundingCalculatorService
 {
     Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
     Task PopulateCompanyData(List<int> ciks);
-    Task<CompanyResponse> GetAllCompanyInfo();
+    List<Company> GetAllCompanyInfo();
 }
+
 public class CompanyResponse
 {
     public required int id { get; set; }

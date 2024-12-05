@@ -51,9 +51,7 @@ public class Startup
         {
             e.MapGet("/companies", (IEdgarFundingCalculatorService s) =>
             {
-                var forecast = Enumerable.Range(1, 5).Select(index => s.GetAllCompanyInfo())
-                    .ToArray();
-                return forecast;
+                return s.GetAllCompanyInfo();
             });
         });
     }
