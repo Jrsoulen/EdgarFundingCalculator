@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-public class EdgarContext : DbContext
+public class CompanyContext : DbContext
 {
     public DbSet<Company> Companies { get; set; }
 
-    public EdgarContext(DbContextOptions<EdgarContext> options) : base(options)
+    public CompanyContext(DbContextOptions<CompanyContext> options) : base(options)
     {
     }
 }

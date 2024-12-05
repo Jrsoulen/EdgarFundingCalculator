@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EdgarRepo.Migrations
 {
-    [DbContext(typeof(EdgarContext))]
+    [DbContext(typeof(CompanyContext))]
     partial class EdgarContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

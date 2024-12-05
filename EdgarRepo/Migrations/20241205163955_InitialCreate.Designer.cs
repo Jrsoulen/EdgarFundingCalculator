@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EdgarRepo.Migrations
 {
-    [DbContext(typeof(EdgarContext))]
+    [DbContext(typeof(CompanyContext))]
     [Migration("20241205163955_InitialCreate")]
     partial class InitialCreate
     {

@@ -2,8 +2,8 @@
 
 public class CompanyRepository : ICompanyRepository
 {
-    private EdgarContext _dbContext;
-    public CompanyRepository(EdgarContext context)
+    private CompanyContext _dbContext;
+    public CompanyRepository(CompanyContext context)
     {
         _dbContext = context;
     }
