@@ -1,5 +1,5 @@
 ﻿using App.Data;
-using static App.Web.EdgarFundingCalculatorService;
+
 
 namespace App.Web
 {
@@ -43,14 +43,6 @@ namespace App.Web
             return companyFacts;
         }
 
-        public class CompanyResponse
-        {
-            public required int id { get; set; }
-            public required string name { get; set; }
-            public decimal standardFundableAmount { get; set; }
-            public decimal specialFundableAmount { get; set; }
-        }
-
         public async Task<CompanyResponse> GetAllCompanyInfo()
         {
             return new CompanyResponse
@@ -70,4 +62,11 @@ public interface IEdgarFundingCalculatorService
     Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
     Task PopulateCompanyData(List<int> ciks);
     Task<CompanyResponse> GetAllCompanyInfo();
+}
+public class CompanyResponse
+{
+    public required int id { get; set; }
+    public required string name { get; set; }
+    public decimal standardFundableAmount { get; set; }
+    public decimal specialFundableAmount { get; set; }
 }

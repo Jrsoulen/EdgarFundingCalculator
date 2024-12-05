@@ -5,7 +5,7 @@ public static class ResponseExtensions
     public static Company MapToCore(this EdgarCompanyFactsResponse response)
     {
         var usdArray = response.Facts.UsGaap.NetIncomeLoss.Units.Usd;
-        var fitleredUsd = usdArray.Where(u => u.Form == "10-K" && u.Frame.StartsWith("CY"));
+        var fitleredUsd = usdArray.Where(u => u.Form == "10-K" && u.Frame != null && u.Frame.StartsWith("CY"));
 
         if (fitleredUsd.Count() != 1) throw new Exception("I did not anticipate this");
 
