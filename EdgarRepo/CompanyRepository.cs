@@ -1,9 +1,9 @@
 ﻿namespace App.Data;
 
-public class CompanyInfoRepository : ICompanyInfoRepository
+public class CompanyRepository : ICompanyRepository
 {
     private EdgarContext _dbContext;
-    public CompanyInfoRepository(EdgarContext context)
+    public CompanyRepository(EdgarContext context)
     {
         _dbContext = context;
     }
@@ -50,7 +50,7 @@ public class CompanyInfoRepository : ICompanyInfoRepository
     }
 }
 
-public interface ICompanyInfoRepository
+public interface ICompanyRepository
 {
     EdgarCompanyInfo CreateEdgarCompanyInfo(EdgarCompanyInfo entity);
     EdgarCompanyInfo GetEdgarCompanyInfo(int id);
