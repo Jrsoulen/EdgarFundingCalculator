@@ -10,7 +10,7 @@ var DbPath = Path.Join(path, "edgar.db");
 builder.Services.AddDbContext<EdgarContext>(options =>
     options.UseSqlite($"Data Source={DbPath}"));
 
-builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
 // Add services to the container.
 var app = builder.Build();
