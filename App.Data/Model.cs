@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 public class CompanyContext : DbContext
 {
     public DbSet<Company> Companies { get; set; }
+    public DbSet<YearlyNetIncomeLoss> YearNetIncomeLoss { get; set; }
 
     public CompanyContext(DbContextOptions<CompanyContext> options) : base(options)
     {
@@ -17,6 +18,11 @@ public class CompanyContext : DbContext
         optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Company>()
+            .HasMany(e => e.YearlyNetIncomeLosses);
+    }
 }
 
 public class Company
@@ -26,6 +32,13 @@ public class Company
     [Key]
     public int Cik { get; set; }
     public required string EntityName { get; set; }
+    public required ICollection<YearlyNetIncomeLoss> YearlyNetIncomeLosses { get; set; }
+}
+
+public class YearlyNetIncomeLoss
+{
+    public int Id { get; set; }
     public required string Frame { get; set; }
+    public int Year { get; set; }
     public required decimal Value { get; set; }
 }
