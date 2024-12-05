@@ -1,12 +1,8 @@
 ﻿using App.Data;
+using static App.Web.EdgarFundingCalculatorService;
 
 namespace App.Web
 {
-    public interface IEdgarFundingCalculatorService
-    {
-        Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
-        Task PopulateCompanyData(List<int> ciks);
-    }
 
     /// <summary>
     /// All Business Logic for application is here
@@ -46,6 +42,32 @@ namespace App.Web
 
             return companyFacts;
         }
+
+        public class CompanyResponse
+        {
+            public required int id { get; set; }
+            public required string name { get; set; }
+            public decimal standardFundableAmount { get; set; }
+            public decimal specialFundableAmount { get; set; }
+        }
+
+        public async Task<CompanyResponse> GetAllCompanyInfo()
+        {
+            return new CompanyResponse
+            {
+                id = 0,
+                name = "test",
+                specialFundableAmount = 0,
+                standardFundableAmount = 0
+            };
+        }
     }
 
+}
+
+public interface IEdgarFundingCalculatorService
+{
+    Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
+    Task PopulateCompanyData(List<int> ciks);
+    Task<CompanyResponse> GetAllCompanyInfo();
 }

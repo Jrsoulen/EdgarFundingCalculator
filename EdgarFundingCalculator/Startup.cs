@@ -1,7 +1,6 @@
 ﻿using App.Data;
 using App.Web;
 using Microsoft.EntityFrameworkCore;
-using static Program;
 
 namespace FundingCalculatorApi;
 
@@ -13,7 +12,7 @@ public class Startup
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         var DbPath = Path.Join(path, "edgar.db");
-        services.AddDbContext<EdgarContext>(options =>
+        services.AddDbContext<CompanyContext>(options =>
             options.UseSqlite($"Data Source={DbPath}"));
 
         // HttpClient for Edgar with required default headers
@@ -38,22 +37,11 @@ public class Startup
         // Configure the HTTP request pipeline.
         app.UseHttpsRedirection();
 
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
         app.UseEndpoints(e =>
         {
-
-            e.MapGet("/weatherforecast", () =>
+            e.MapGet("/companies", (IEdgarFundingCalculatorService s) =>
             {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    (
-                        DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                        Random.Shared.Next(-20, 55),
-                        summaries[Random.Shared.Next(summaries.Length)]
-                    ))
+                var forecast = Enumerable.Range(1, 5).Select(index => s.GetAllCompanyInfo())
                     .ToArray();
                 return forecast;
             });
