@@ -46,6 +46,7 @@ public class Startup
 
         // Configure the HTTP request pipeline.
         app.UseHttpsRedirection();
+        app.UseRouting();
 
         app.UseEndpoints(e =>
         {
