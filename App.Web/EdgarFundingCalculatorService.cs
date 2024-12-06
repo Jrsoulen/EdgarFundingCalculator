@@ -49,9 +49,44 @@ namespace App.Web
             }
         }
 
-        public List<Company> GetAllCompanyInfo()
+        public List<CompanyResponse> GetAllCompanyInfo()
         {
-            return _companyRepo.GetAllEdgarCompanyInfo();
+            var companies = _companyRepo.GetAllEdgarCompanyInfo();
+
+            return companies.Select(company => new CompanyResponse()
+            {
+                id = company.Cik,
+                name = company.EntityName,
+                standardFundableAmount = CalculateStandardFundableAmount(company),
+                specialFundableAmount = CalculateSpecialFundableAmount(company),
+            }).ToList();
+        }
+
+        private decimal CalculateStandardFundableAmount(Company company)
+        {
+            // Company must have income data for all years between (and including) 2018 and 2022.
+            var requiredYears = new int[2018, 2019, 2020, 2021, 2022];
+            foreach (var requiredYear in requiredYears)
+            {
+                if (!company.YearlyNetIncomeLosses.Where(y => y.Year == requiredYear).Any()) return 0;
+            }
+
+            // Company must have had positive income in both 2021 and 2022.
+            var positiveYears = new int[2021, 2022];
+            foreach (var requiredYear in positiveYears)
+            {
+                var yearData = company.YearlyNetIncomeLosses.Where(y => y.Year == requiredYear).First();
+                // Less than? Because these are income losses?
+                if (0 < yearData.Value)
+                    return 0;
+            }
+
+            return 1;
+        }
+
+        private decimal CalculateSpecialFundableAmount(Company company)
+        {
+            return 0;
         }
     }
 }
@@ -60,7 +95,7 @@ public interface IEdgarFundingCalculatorService
 {
     Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
     Task PopulateCompanyData(List<int> ciks);
-    List<Company> GetAllCompanyInfo();
+    List<CompanyResponse> GetAllCompanyInfo();
 }
 
 public class CompanyResponse

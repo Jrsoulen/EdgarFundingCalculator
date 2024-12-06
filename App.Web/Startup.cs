@@ -38,11 +38,11 @@ public class Startup
 
         var ciks = Configuration.GetSection("ProvidedCiks").Get<List<int>>();
 
-        using (var scope = app.ApplicationServices.CreateScope())
-        {
-            await scope.ServiceProvider.GetRequiredService<IEdgarFundingCalculatorService>()
-                .PopulateCompanyData(ciks);
-        }
+        //using (var scope = app.ApplicationServices.CreateScope())
+        //{
+        //    await scope.ServiceProvider.GetRequiredService<IEdgarFundingCalculatorService>()
+        //        .PopulateCompanyData(ciks);
+        //}
 
         // Configure the HTTP request pipeline.
         app.UseHttpsRedirection();
