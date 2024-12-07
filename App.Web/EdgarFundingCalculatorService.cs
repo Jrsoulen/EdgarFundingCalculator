@@ -24,11 +24,9 @@ namespace App.Web
                 if (foraData != null) continue; // Already populated, do we care?
 
                 var edgarResponse = await GetCompanyFacts(cik);
-                var company = (edgarResponse == null) ?
-                    new Company() { Cik = cik, EntityName = "", YearlyNetIncome = new List<YearlyNetIncomeLoss>() } :
-                    edgarResponse.MapToCore();
+                if (edgarResponse == null) continue; // No Edgar Data
 
-                _companyRepo.CreateEdgarCompanyInfo(company);
+                _companyRepo.CreateEdgarCompanyInfo(edgarResponse.MapToCore());
             }
         }
 
