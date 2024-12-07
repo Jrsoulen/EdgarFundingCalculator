@@ -33,18 +33,23 @@ public class Startup
         });
     }
 
-    public async void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app,
+        CompanyContext companyDbContext,
+        IEdgarFundingCalculatorService edgarFundingCalculatorService)
     {
+        companyDbContext.Database.EnsureCreated();
 
         var ciks = Configuration.GetSection("ProvidedCiks").Get<List<int>>();
 
+        //ciks.Clear();
+
         // Prepopulates company data
-        using (var scope = app.ApplicationServices.CreateScope())
+        if (ciks != null)
         {
-            if (ciks != null)
-                await scope.ServiceProvider.GetRequiredService<IEdgarFundingCalculatorService>()
-                    .PopulateCompanyData(ciks);
+            Task populateDatatask = edgarFundingCalculatorService.PopulateCompanyData(ciks);
+            populateDatatask.Wait();
         }
+
         Console.WriteLine("Data Population step complete, Application ready for queries.");
 
         // Configure the HTTP request pipeline.
