@@ -49,9 +49,11 @@ namespace App.Web
             }
         }
 
-        public List<CompanyResponse> GetAllCompanyInfo()
+        public List<CompanyResponse> GetCompanyInfo(string? firstLetter)
         {
-            var companies = _companyRepo.GetAllEdgarCompanyInfo();
+            var companies = firstLetter != null ?
+                _companyRepo.GetEdgarCompanyInfoByFirstLetter(firstLetter) :
+                _companyRepo.GetAllEdgarCompanyInfo();
 
             return companies.Select(company => new CompanyResponse()
             {
@@ -93,9 +95,9 @@ namespace App.Web
 
 public interface IEdgarFundingCalculatorService
 {
-    Task<EdgarCompanyFactsResponse> GetCompanyFacts(int cik);
+    Task<EdgarCompanyFactsResponse?> GetCompanyFacts(int cik);
     Task PopulateCompanyData(List<int> ciks);
-    List<CompanyResponse> GetAllCompanyInfo();
+    List<CompanyResponse> GetCompanyInfo(string? firstLetter);
 }
 
 public class CompanyResponse

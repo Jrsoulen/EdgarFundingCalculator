@@ -2,5 +2,8 @@
 
 GET {{EdgarFundingCalculator_HostAddress}}/companies/
 Accept: application/json
+###
 
+GET {{EdgarFundingCalculator_HostAddress}}/companies?firstLetter=a
+Accept: application/json
 ###

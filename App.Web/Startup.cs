@@ -33,7 +33,7 @@ public class Startup
         });
     }
 
-    public async void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app)
     {
 
         var ciks = Configuration.GetSection("ProvidedCiks").Get<List<int>>();
@@ -50,9 +50,9 @@ public class Startup
 
         app.UseEndpoints(e =>
         {
-            e.MapGet("/companies", (IEdgarFundingCalculatorService s) =>
+            e.MapGet("/companies", (string? firstLetter, IEdgarFundingCalculatorService s) =>
             {
-                return s.GetAllCompanyInfo();
+                return s.GetCompanyInfo(firstLetter);
             });
         });
     }

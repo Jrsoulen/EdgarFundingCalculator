@@ -27,7 +27,14 @@ public class CompanyRepository : ICompanyRepository
     }
     public List<Company> GetAllEdgarCompanyInfo()
     {
-        return _dbContext.Companies.Include(c => c.YearlyNetIncomeLosses).ToList();
+        return _dbContext.Companies.Include(c => c.YearlyNetIncome).ToList();
+    }
+    public List<Company> GetEdgarCompanyInfoByFirstLetter(string firstLetter)
+    {
+        return _dbContext.Companies
+            .Include(c => c.YearlyNetIncome)
+            .Where(c => c.EntityName.StartsWith(firstLetter))
+            .ToList();
     }
 }
 
@@ -36,4 +43,5 @@ public interface ICompanyRepository
     Company CreateEdgarCompanyInfo(Company entity);
     Company? GetEdgarCompanyInfo(int id);
     List<Company> GetAllEdgarCompanyInfo();
+    List<Company> GetEdgarCompanyInfoByFirstLetter(string firstLetter);
 }
