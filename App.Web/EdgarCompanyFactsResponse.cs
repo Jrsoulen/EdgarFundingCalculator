@@ -14,7 +14,7 @@ public static class ResponseExtensions
         {
             Cik = response.Cik,
             EntityName = response.EntityName,
-            YearlyNetIncomeLosses = new Collection<YearlyNetIncomeLoss>(filteredUsd.Select(u =>
+            YearlyNetIncome = new Collection<YearlyNetIncomeLoss>(filteredUsd.Select(u =>
                 new YearlyNetIncomeLoss()
                 {
                     Frame = u.Frame!,

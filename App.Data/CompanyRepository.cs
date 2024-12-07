@@ -12,7 +12,7 @@ public class CompanyRepository : ICompanyRepository
     public Company CreateEdgarCompanyInfo(Company entity)
     {
         _dbContext.Add(entity);
-        foreach (var yearlyNetIncomeLoss in entity.YearlyNetIncomeLosses)
+        foreach (var yearlyNetIncomeLoss in entity.YearlyNetIncome)
         {
             _dbContext.YearNetIncomeLoss.Add(yearlyNetIncomeLoss);
         }

@@ -21,7 +21,7 @@ public class CompanyContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Company>()
-            .HasMany(e => e.YearlyNetIncomeLosses);
+            .HasMany(e => e.YearlyNetIncome);
     }
 }
 
@@ -32,7 +32,7 @@ public class Company
     [Key]
     public int Cik { get; set; }
     public required string EntityName { get; set; }
-    public required ICollection<YearlyNetIncomeLoss> YearlyNetIncomeLosses { get; set; }
+    public required ICollection<YearlyNetIncomeLoss> YearlyNetIncome { get; set; }
 }
 
 public class YearlyNetIncomeLoss
