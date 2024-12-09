@@ -1,7 +1,6 @@
 # EdgarFundingCalculator
 Persists data from selected Edgar CIK and provides an API for performing a few calculations on the persisted data.
-
-!! Running this will create an artifact for the SqlLite db, if you're on windows it will go into C:/{User}/AppData/Local/
+Running this will create an artifact for the SqlLite db, if you're on windows it will go into C:/{User}/AppData/Local/
 
 /***************/
 /*** Running ***/
@@ -22,6 +21,7 @@ Not a priority for a one time data seed step, but could easily but cut down to a
 /*** Testing ***/
 
 Once running you can open the EdgarFundingCalculator.http and click send request on either request for an immediate integration test
+Or use your http request app of choice for http://localhost:5164/companiesUnInstall-Package EntityFramework
 Unit test framework with sample test is also set up
 
 /***************/
@@ -37,3 +37,4 @@ If I had to do this again:
 Things I'd Do Next: (AKA Things I would have already done)
 	Logging!!!
 	Refactor to isolate calculations for funding amounts - this might even be better as a scripting language or something
+	Refactor to remove entity references from App.Web
