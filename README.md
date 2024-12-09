@@ -5,6 +5,8 @@ Running this will create an artifact for the SqlLite db, if you're on windows it
 /***************/
 /*** Running ***/
 
+Prerequisite should just be .Net 9 SDK
+
 Open in visual studio, set the App.Web as the startup project, and click Run
 Or dotnet run the App.Web project
 
