@@ -41,8 +41,6 @@ public class Startup
 
         var ciks = Configuration.GetSection("ProvidedCiks").Get<List<int>>();
 
-        //ciks.Clear();
-
         // Prepopulates company data
         if (ciks != null)
         {

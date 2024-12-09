@@ -18,7 +18,7 @@ public class EdgarApiServiceTests
 
         var sut = new EdgarFundingCalculatorService(client, mockRepo.Object);
 
-        var company = await sut.GetCompanyFacts(1007587);
+        var company = await sut.GetEdgarCompanyFacts(1007587);
 
         Assert.NotNull(company);
 

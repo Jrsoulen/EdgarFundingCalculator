@@ -23,14 +23,14 @@ namespace App.Web
                 var foraData = _companyRepo.GetEdgarCompanyInfo(cik);
                 if (foraData != null) continue; // Already populated, do we care?
 
-                var edgarResponse = await GetCompanyFacts(cik);
+                var edgarResponse = await GetEdgarCompanyFacts(cik);
                 if (edgarResponse == null) continue; // No Edgar Data
 
                 _companyRepo.CreateEdgarCompanyInfo(edgarResponse.MapToCore());
             }
         }
 
-        public async Task<EdgarCompanyFactsResponse?> GetCompanyFacts(int cik)
+        public async Task<EdgarCompanyFactsResponse?> GetEdgarCompanyFacts(int cik)
         {
             // API wants leading zeros on 10 digit CIK
             var cikString = cik.ToString();
@@ -72,6 +72,8 @@ namespace App.Web
             {
                 var requiredYearIncome = company.YearlyNetIncome.Where(y => y.Year == requiredYear).FirstOrDefault();
                 if (requiredYearIncome == null) return 0;
+
+                // Using highest income between 2018 and 2022
                 if (requiredYearIncome.Value > maxRequiredYearValue) maxRequiredYearValue = requiredYearIncome.Value;
             }
 
@@ -85,7 +87,7 @@ namespace App.Web
                     return 0;
             }
 
-            // Using highest income between 2018 and 2022
+
             if (maxRequiredYearValue >= 10000000000)
             {
                 // If income is greater than or equal to $10B, standard fundable amount is 12.33% of income
@@ -121,7 +123,7 @@ namespace App.Web
 
 public interface IEdgarFundingCalculatorService
 {
-    Task<EdgarCompanyFactsResponse?> GetCompanyFacts(int cik);
+    Task<EdgarCompanyFactsResponse?> GetEdgarCompanyFacts(int cik);
     Task PopulateCompanyData(List<int> ciks);
     List<CompanyResponse> GetCompanyInfo(string? firstLetter);
 }
