@@ -11,10 +11,10 @@ Open in visual studio, set the App.Web as the startup project, and click Run
 Or dotnet run the App.Web project
 
 On the first run this will loop across CIKs in the appSettings and populate the SQLLite database
+** This step takes about thirty seconds - suboptimal for what it is doing, but should just be run once
 	On a restart, the program will retry and CIKs that did not have Edgar data
+
 Once that is complete the console will say so and the app will be ready for testing
-	This step takes about thirty seconds - suboptimal for what it is doing.
-	Not a priority for a one time data seed step, but could easily but cut down to a fraction of that.
 
 /***************/
 /***************/
@@ -24,7 +24,7 @@ Once that is complete the console will say so and the app will be ready for test
 /*** Testing ***/
 
 Once running you can open the EdgarFundingCalculator.http and click send request on either request for an immediate integration test
-Or use your http request app of choice for http://localhost:5164/companiesUnInstall-Package EntityFramework
+Or use your http request app of choice for http://localhost:5164/companies
 Unit test framework with sample test is also set up
 
 /***************/
